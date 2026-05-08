@@ -42,6 +42,38 @@ One founder. Six client projects delivered. The entire operation runs on this sy
 
 ---
 
+## Why This Architecture Matters: Quota Efficiency
+
+If you're running multiple projects with Claude Code, **you're probably burning through your quota fast.** Every project is a separate AI context — separate `CLAUDE.md`, separate MCP servers, separate codebase discovery. Switch between 5 projects in a day and you've consumed 5x the tokens just on context loading.
+
+**HEA Consulting AI solves this by centralizing everything into one brain.**
+
+```
+WITHOUT centralization:              WITH HEA architecture:
+
+Project A → AI session → quota       ┌──────────────────┐
+Project B → AI session → quota       │  One AI Session   │
+Project C → AI session → quota   →   │  (Central Brain)  │
+Project D → AI session → quota       │  Routes to all    │
+Project E → AI session → quota       │  projects via MCP │
+                                      └──────────────────┘
+5 cold starts, 5 context loads        1 session, 0 cold starts
+```
+
+| Metric | Per-project approach | Centralized brain |
+|--------|---------------------|-------------------|
+| Sessions per day | 5-8 (one per project) | 1-2 (everything routed) |
+| Context reload overhead | Every switch | Never (persistent) |
+| MCP server RAM | ~300MB per project | ~300MB total |
+| Cross-project queries | Impossible | Native ("revenue across all clients?") |
+| Quota consumption | Burns 5x fast | Sustainable on Max plan |
+
+We run **8 active projects** through this system on a single Claude Code Max subscription ($100/month, 5x usage) without hitting limits. The unified MCP server gives every project access to **72 tools across 8 business domains** — finance, projects, sales, knowledge, docs, tasks, client success, and content — all in one process.
+
+> **Deep dive:** See [docs/QUOTA-EFFICIENCY.md](docs/QUOTA-EFFICIENCY.md) for the full technical breakdown, quota math, and implementation guide.
+
+---
+
 ## The Mission
 
 Help **1,000 SMBs** in Mexico and Latin America adopt better operational practices — SOPs, Lean thinking, data-driven decisions, continuous improvement culture — by making consulting **accessible and AI-augmented**.
@@ -207,7 +239,7 @@ If you believe small businesses deserve access to the same operational excellenc
 
 This entire system — every line of code, every database migration, every edge function — was built in partnership with [Claude Code](https://claude.ai). Not as a code completion tool, but as a development partner that understands the full context of the business.
 
-Claude Code is the reason one person can build and operate all of this.
+Claude Code is the reason one person can build and operate all of this. And this architecture is the reason one Claude Code subscription can power all of it — instead of hitting the 5x quota wall halfway through the week, the centralized brain makes every token count across every project.
 
 ---
 
